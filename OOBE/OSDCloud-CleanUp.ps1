@@ -3,14 +3,13 @@ Start-Transcript -Path (Join-Path "$env:ProgramData\Microsoft\IntuneManagementEx
 
 Write-Host "Execute OSD Cloud Cleanup Script" -ForegroundColor Green
 
-# Copying the OOBEDeploy and AutopilotOOBE Logs
-Get-ChildItem 'C:\Windows\Temp' -Filter *OOBE* | Copy-Item -Destination 'C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\OSD' -Force
-
 # Copying OSDCloud Logs
 If (Test-Path -Path 'C:\OSDCloud\Logs') {
     Move-Item 'C:\OSDCloud\Logs\*.*' -Destination 'C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\OSD' -Force
 }
-Move-Item 'C:\ProgramData\OSDeploy\*.*' -Destination 'C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\OSD' -Force
+If (Test-Path -Path 'C:\ProgramData\OSDeploy') {
+    Move-Item 'C:\ProgramData\OSDeploy\*.*' -Destination 'C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\OSD' -Force
+}
 
 
 # Cleanup directories
