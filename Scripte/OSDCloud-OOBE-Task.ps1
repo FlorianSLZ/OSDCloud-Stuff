@@ -1,8 +1,8 @@
 #================================================
 #   [PreOS] Update Module
 #================================================
-Write-Host -ForegroundColor Green "Updating OSD PowerShell Module"
-Install-Module OSD -Force
+#Write-Host -ForegroundColor Green "Updating OSD PowerShell Module"
+#Install-Module OSD -Force
 
 Write-Host  -ForegroundColor Green "Importing OSD PowerShell Module"
 Import-Module OSD -Force   
