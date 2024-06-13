@@ -25,16 +25,11 @@ Start-Process PowerShell -ArgumentList "-NoL -C Install-Language en-us" -Wait
 Write-Host -ForegroundColor DarkGray "Enabling built-in Windows Producy Key"
 Start-Process PowerShell -ArgumentList "-NoL -C Invoke-WebPSScript https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Set-EmbeddedWINKey.ps1" -Wait
 
-Write-Host -ForegroundColor DarkGray "Executing Cleanup Script"
-Start-Process PowerShell -ArgumentList "-NoL -C Invoke-WebPSScript https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/OSDCloud-CleanUp.ps1" -Wait
-
 Write-Host -ForegroundColor DarkGray "Starting Windows Updates"
 Start-Process PowerShell -ArgumentList "-NoL -C Invoke-WebPSScript https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Windows-Updates.ps1" -Wait
 
-# Cleanup scheduled Tasks
-Write-Host -ForegroundColor DarkGray "Unregistering Scheduled Tasks"
-Unregister-ScheduledTask -TaskName "OSDCloud OOBE SendKeys" -Confirm:`$false
-Unregister-ScheduledTask -TaskName "OSDCloud OOBE Script" -Confirm:`$false
+Write-Host -ForegroundColor DarkGray "Executing Cleanup Script"
+Start-Process PowerShell -ArgumentList "-NoL -C Invoke-WebPSScript https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/OSDCloud-CleanUp.ps1" -Wait
 
 Write-Host -ForegroundColor DarkGray "Restarting Computer"
 Start-Process PowerShell -ArgumentList "-NoL -C Restart-Computer -Force" -Wait
