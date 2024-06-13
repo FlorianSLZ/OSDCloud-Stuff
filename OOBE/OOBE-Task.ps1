@@ -25,19 +25,16 @@ Start-Process PowerShell -ArgumentList "-NoL -C Install-Language en-us" -Wait
 Write-Host -ForegroundColor DarkGray "Enabling built-in Windows Producy Key"
 Start-Process PowerShell -ArgumentList "-NoL -C Invoke-WebPSScript https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Set-EmbeddedWINKey.ps1" -Wait
 
-Write-Host -ForegroundColor DarkGray "Executing OOBEDeploy Script from OSDCloud Module"
-Start-Process PowerShell -ArgumentList "-NoL -C Start-OOBEDeploy" -Wait
-
 Write-Host -ForegroundColor DarkGray "Executing Cleanup Script"
 Start-Process PowerShell -ArgumentList "-NoL -C Invoke-WebPSScript https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/OSDCloud-CleanUp.ps1" -Wait
 
-Write-Host -ForegroundColor DarkGray "Enabling built-in Windows Producy Key"
+Write-Host -ForegroundColor DarkGray "Starting Windows Updates"
 Start-Process PowerShell -ArgumentList "-NoL -C Invoke-WebPSScript https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Windows-Updates.ps1" -Wait
 
 # Cleanup scheduled Tasks
 Write-Host -ForegroundColor DarkGray "Unregistering Scheduled Tasks"
-Unregister-ScheduledTask -TaskName "Scheduled Task for SendKeys" -Confirm:`$false
-Unregister-ScheduledTask -TaskName "Scheduled Task for OSDCloud post installation" -Confirm:`$false
+Unregister-ScheduledTask -TaskName "OSDCloud OOBE SendKeys" -Confirm:`$false
+Unregister-ScheduledTask -TaskName "OSDCloud OOBE Script" -Confirm:`$false
 
 Write-Host -ForegroundColor DarkGray "Restarting Computer"
 Start-Process PowerShell -ArgumentList "-NoL -C Restart-Computer -Force" -Wait
@@ -99,7 +96,7 @@ $taskFolder = $ShedService.GetFolder("\")
 $taskFolder.RegisterTaskDefinition($TaskName, $Task , 6, "SYSTEM", $NULL, 5)
 
 # Create Scheduled Task for OSDCloud post installation with 20 seconds delay
-$TaskName = "OSDCloud post installation script"
+$TaskName = "OSDCloud OOBE Script"
 
 $ShedService = New-Object -comobject 'Schedule.Service'
 $ShedService.Connect()
