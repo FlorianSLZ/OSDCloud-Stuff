@@ -25,7 +25,7 @@ Start-Process PowerShell -ArgumentList "-NoL -C Install-Language en-us" -Wait
 Write-Host -ForegroundColor DarkGray "Enabling built-in Windows Producy Key"
 Start-Process PowerShell -ArgumentList "-NoL -C Invoke-WebPSScript https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Set-EmbeddedWINKey.ps1" -Wait
 
-Write-Host -ForegroundColor DarkGray "Executing OOBEDeploy Script fomr OSDCloud Module"
+Write-Host -ForegroundColor DarkGray "Executing OOBEDeploy Script from OSDCloud Module"
 Start-Process PowerShell -ArgumentList "-NoL -C Start-OOBEDeploy" -Wait
 
 Write-Host -ForegroundColor DarkGray "Executing Cleanup Script"
@@ -39,7 +39,7 @@ Unregister-ScheduledTask -TaskName "Scheduled Task for OSDCloud post installatio
 Write-Host -ForegroundColor DarkGray "Restarting Computer"
 Start-Process PowerShell -ArgumentList "-NoL -C Restart-Computer -Force" -Wait
 
-Stop-Transcript -Verbose | Out-File
+Stop-Transcript -Verbose
 "@
 
 Out-File -FilePath $ScriptPathOOBE -InputObject $OOBEScript -Encoding ascii
@@ -55,7 +55,7 @@ Write-Host -ForegroundColor DarkGray "Stop Debug-Mode (SHIFT + F10) with Wscript
 Write-Host -ForegroundColor DarkGray "SendKeys: ALT + TAB"
 `$WscriptShell.SendKeys("%({TAB})")
 
-Start-Sleep -Seconds 1
+Start-Sleep -Seconds 2
 
 # Shift + F10
 Write-Host -ForegroundColor DarkGray "SendKeys: SHIFT + F10"
@@ -66,9 +66,10 @@ Stop-Transcript -Verbose | Out-File
 
 Out-File -FilePath $ScriptPathSendKeys -InputObject $SendKeysScript -Encoding ascii
 
-# Download ServiceUI.exe
-Write-Host -ForegroundColor Gray "Download ServiceUI.exe from GitHub Repo"
-Invoke-WebRequest https://github.com/FlorianSLZ/OSDCloud-Stuff/blob/main/OOBE/ServiceUI64.exe -OutFile "C:\OSDCloud\ServiceUI.exe"
+# Download ServiceUI64.exe
+Write-Host -ForegroundColor Gray "Download ServiceUI64.exe from GitHub Repo"
+Invoke-WebRequest https://github.com/FlorianSLZ/OSDCloud-Stuff/raw/main/OOBE/ServiceUI64.exe -OutFile "C:\OSDCloud\ServiceUI64.exe"
+
 
 #Create Scheduled Task for SendKeys with 15 seconds delay
 $TaskName = "OSDCloud OOBE SendKeys"
@@ -87,7 +88,7 @@ $trigger.Delay = 'PT15S'
 $trigger.Enabled = $true
 
 $action = $Task.Actions.Create(0)
-$action.Path = 'C:\OSDCloud\ServiceUI.exe'
+$action.Path = 'C:\OSDCloud\ServiceUI64.exe'
 $action.Arguments = '-process:RuntimeBroker.exe C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe ' + $ScriptPathSendKeys + ' -NoExit'
 
 $taskFolder = $ShedService.GetFolder("\")
@@ -111,7 +112,7 @@ $trigger.Delay = 'PT20S'
 $trigger.Enabled = $true
 
 $action = $Task.Actions.Create(0)
-$action.Path = 'C:\OSDCloud\ServiceUI.exe'
+$action.Path = 'C:\OSDCloud\ServiceUI64.exe'
 $action.Arguments = '-process:RuntimeBroker.exe C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe ' + $ScriptPathOOBE + ' -NoExit'
 
 $taskFolder = $ShedService.GetFolder("\")
