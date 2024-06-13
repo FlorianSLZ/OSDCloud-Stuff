@@ -51,16 +51,6 @@ Process {
     # Start logging
     Start-Transcript "C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\Windows-Updates.log"
 
-    if($(Test-NetConnection microsoft.com -CommonTCPPort "Http" -ErrorAction SilentlyContinue).TcpTestSucceeded -ne $true){
-        Write-Error "No Internet Connection!"
-        exit 1
-    }
-
-
-
-    #############################################
-    #               Windows Updates             #
-    #############################################
     Write-Host "Installing Windows Updates ..."
 
     # Main logic
