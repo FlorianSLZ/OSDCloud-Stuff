@@ -42,7 +42,7 @@ Unregister-ScheduledTask -TaskName "Scheduled Task for OSDCloud post installatio
 Write-Host -ForegroundColor DarkGray "Restarting Computer"
 Start-Process PowerShell -ArgumentList "-NoL -C Restart-Computer -Force" -Wait
 
-Stop-Transcript -Verbose
+Stop-Transcript
 "@
 
 Out-File -FilePath $ScriptPathOOBE -InputObject $OOBEScript -Encoding ascii
