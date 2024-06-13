@@ -1,5 +1,3 @@
-# oobetasks.osdcloud.ch
-
 $scriptFolderPath = "$env:SystemDrive\OSDCloud\Scripts"
 $ScriptPathOOBE = $(Join-Path -Path $scriptFolderPath -ChildPath "OOBE.ps1")
 $ScriptPathSendKeys = $(Join-Path -Path $scriptFolderPath -ChildPath "SendKeys.ps1")
@@ -73,7 +71,7 @@ Write-Host -ForegroundColor Gray "Download ServiceUI.exe from GitHub Repo"
 Invoke-WebRequest https://github.com/FlorianSLZ/OSDCloud-Stuff/blob/main/OOBE/ServiceUI64.exe -OutFile "C:\OSDCloud\ServiceUI.exe"
 
 #Create Scheduled Task for SendKeys with 15 seconds delay
-$TaskName = "Scheduled Task for SendKeys"
+$TaskName = "OSDCloud OOBE SendKeys"
 
 $ShedService = New-Object -comobject 'Schedule.Service'
 $ShedService.Connect()
@@ -97,7 +95,7 @@ $taskFolder = $ShedService.GetFolder("\")
 $taskFolder.RegisterTaskDefinition($TaskName, $Task , 6, "SYSTEM", $NULL, 5)
 
 # Create Scheduled Task for OSDCloud post installation with 20 seconds delay
-$TaskName = "Scheduled Task for OSDCloud post installation"
+$TaskName = "OSDCloud post installation script"
 
 $ShedService = New-Object -comobject 'Schedule.Service'
 $ShedService.Connect()
@@ -119,24 +117,3 @@ $action.Arguments = '-process:RuntimeBroker.exe C:\WINDOWS\System32\WindowsPower
 $taskFolder = $ShedService.GetFolder("\")
 # https://msdn.microsoft.com/en-us/library/windows/desktop/aa382577(v=vs.85).aspx
 $taskFolder.RegisterTaskDefinition($TaskName, $Task , 6, "SYSTEM", $NULL, 5)
-
-
-
-
-
-#================================================
-#  [PostOS] AutopilotOOBE CMD Command Line
-#================================================
-Write-Host -ForegroundColor Green "Create C:\Windows\System32\OOBE.cmd"
-$OOBECMD = @'
-PowerShell -NoL -Com Set-ExecutionPolicy RemoteSigned -Force
-Set Path = %PATH%;C:\Program Files\WindowsPowerShell\Scripts
-Start /Wait PowerShell -NoL -C Install-Module OSD -Force
-Start /Wait PowerShell -NoL -C Start-OOBEDeploy
-Start /Wait PowerShell -NoL -C Install-Language de-de
-Start /Wait PowerShell -NoL -C Install-Language fr-fr
-Start /Wait PowerShell -NoL -C Install-Language it-it
-Start /Wait PowerShell -NoL -C Install-Language en-us
-Start /Wait PowerShell -NoL -C Restart-Computer -Force
-'@
-$OOBECMD | Out-File -FilePath 'C:\Windows\System32\OOBE.cmd' -Encoding ascii -Force
