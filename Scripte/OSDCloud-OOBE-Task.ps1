@@ -26,7 +26,7 @@ Start-OSDCloud @Params
 #================================================
 Write-Host -ForegroundColor Green "Create C:\Windows\Setup\Scripts\SetupComplete.cmd"
 $SetupCompleteCMD = @'
-powershell.exe -Command Set-ExecutionPolicy RemoteSigned -Force
+powershell.exe -Command Set-ExecutionPolicy Unrestricted -Force
 powershell.exe -Command "& {IEX (IRM https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/OOBE-Task.ps1)}"
 '@
 $SetupCompleteCMD | Out-File -FilePath 'C:\Windows\Setup\Scripts\SetupComplete.cmd' -Encoding ascii -Force
