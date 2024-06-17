@@ -56,7 +56,7 @@ Start-Sleep -Seconds 2
 Write-Host -ForegroundColor DarkGray "SendKeys: SHIFT + F10"
 `$WscriptShell.SendKeys("+({F10})")
 
-Stop-Transcript -Verbose | Out-File
+Stop-Transcript -Verbose 
 "@
 
 Out-File -FilePath $ScriptPathSendKeys -InputObject $SendKeysScript -Encoding ascii
@@ -84,7 +84,7 @@ $trigger.Enabled = $true
 
 $action = $Task.Actions.Create(0)
 $action.Path = 'C:\OSDCloud\ServiceUI64.exe'
-$action.Arguments = '-process:RuntimeBroker.exe C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe ' + $ScriptPathSendKeys + ' -NoExit'
+$action.Arguments = '-process:RuntimeBroker.exe C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe ' + $ScriptPathSendKeys + ' -ExecutionPolicy Bypass -NoExit'
 
 $taskFolder = $ShedService.GetFolder("\")
 # https://msdn.microsoft.com/en-us/library/windows/desktop/aa382577(v=vs.85).aspx
@@ -108,7 +108,7 @@ $trigger.Enabled = $true
 
 $action = $Task.Actions.Create(0)
 $action.Path = 'C:\OSDCloud\ServiceUI64.exe'
-$action.Arguments = '-process:RuntimeBroker.exe C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe ' + $ScriptPathOOBE + ' -NoExit'
+$action.Arguments = '-process:RuntimeBroker.exe C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe ' + $ScriptPathOOBE + ' -ExecutionPolicy Bypass -NoExit'
 
 $taskFolder = $ShedService.GetFolder("\")
 # https://msdn.microsoft.com/en-us/library/windows/desktop/aa382577(v=vs.85).aspx
