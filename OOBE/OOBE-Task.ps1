@@ -11,28 +11,28 @@ If(!(Test-Path -Path $scriptFolderPath)) {
 $OOBEScript =@"
 Start-Transcript -Path "C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\OSD\OSDCloud-OOBE-Actions.log"
 
-Write-Host -ForegroundColor DarkGray "Installing Language Pack: DE-DE"
+Write-Host "Installing Language Pack: DE-DE"
 Start-Process PowerShell -ArgumentList "-NoL -C Install-Language de-de" -Wait
 
-Write-Host -ForegroundColor DarkGray "Installing Language Pack: FR-FR"
+Write-Host "Installing Language Pack: FR-FR"
 Start-Process PowerShell -ArgumentList "-NoL -C Install-Language fr-fr" -Wait
 
-Write-Host -ForegroundColor DarkGray "Installing Language Pack: IT-IT"
+Write-Host "Installing Language Pack: IT-IT"
 Start-Process PowerShell -ArgumentList "-NoL -C Install-Language it-it" -Wait
 
-Write-Host -ForegroundColor DarkGray "Installing Language Pack: EN-US"
+Write-Host "Installing Language Pack: EN-US"
 Start-Process PowerShell -ArgumentList "-NoL -C Install-Language en-us" -Wait
 
-Write-Host -ForegroundColor DarkGray "Enabling built-in Windows Producy Key"
+Write-Host "Enabling built-in Windows Producy Key"
 Start-Process PowerShell -ArgumentList "-NoL -C Invoke-WebPSScript https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Set-EmbeddedWINKey.ps1" -Wait
 
-Write-Host -ForegroundColor DarkGray "Starting Windows Updates"
+Write-Host "Starting Windows Updates"
 Start-Process PowerShell -ArgumentList "-NoL -C Invoke-WebPSScript https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Windows-Updates.ps1" -Wait
 
-Write-Host -ForegroundColor DarkGray "Executing Cleanup Script"
+Write-Host "Executing Cleanup Script"
 Start-Process PowerShell -ArgumentList "-NoL -C Invoke-WebPSScript https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/OSDCloud-CleanUp.ps1" -Wait
 
-Write-Host -ForegroundColor DarkGray "Restarting Computer"
+Write-Host "Restarting Computer"
 Start-Process PowerShell -ArgumentList "-NoL -C Restart-Computer -Force" -Wait
 
 Stop-Transcript
@@ -43,17 +43,17 @@ Out-File -FilePath $ScriptPathOOBE -InputObject $OOBEScript -Encoding ascii
 $SendKeysScript = @"
 Start-Transcript -Path "C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\OSD\OSDCloud-SendKeys.log"
 
-Write-Host -ForegroundColor DarkGray "Stop Debug-Mode (SHIFT + F10) with WscriptShell.SendKeys"
+Write-Host "Stop Debug-Mode (SHIFT + F10) with WscriptShell.SendKeys"
 `$WscriptShell = New-Object -com Wscript.Shell
 
 # ALT + TAB
-Write-Host -ForegroundColor DarkGray "SendKeys: ALT + TAB"
+Write-Host "SendKeys: ALT + TAB"
 `$WscriptShell.SendKeys("%({TAB})")
 
 Start-Sleep -Seconds 2
 
 # Shift + F10
-Write-Host -ForegroundColor DarkGray "SendKeys: SHIFT + F10"
+Write-Host "SendKeys: SHIFT + F10"
 `$WscriptShell.SendKeys("+({F10})")
 
 Stop-Transcript -Verbose 
@@ -76,6 +76,8 @@ $Task = $ShedService.NewTask(0)
 $Task.RegistrationInfo.Description = $taskName
 $Task.Settings.Enabled = $true
 $Task.Settings.AllowDemandStart = $true
+$Task.Settings.DisallowStartIfOnBatteries = $false
+$Task.Settings.StopIfGoingOnBatteries = $false
 
 # https://msdn.microsoft.com/en-us/library/windows/desktop/aa383987(v=vs.85).aspx
 $trigger = $task.triggers.Create(9) # 0 EventTrigger, 1 TimeTrigger, 2 DailyTrigger, 3 WeeklyTrigger, 4 MonthlyTrigger, 5 MonthlyDOWTrigger, 6 IdleTrigger, 7 RegistrationTrigger, 8 BootTrigger, 9 LogonTrigger
@@ -100,6 +102,9 @@ $Task = $ShedService.NewTask(0)
 $Task.RegistrationInfo.Description = $taskName
 $Task.Settings.Enabled = $true
 $Task.Settings.AllowDemandStart = $true
+$Task.Settings.DisallowStartIfOnBatteries = $false
+$Task.Settings.StopIfGoingOnBatteries = $false
+
 
 # https://msdn.microsoft.com/en-us/library/windows/desktop/aa383987(v=vs.85).aspx
 $trigger = $task.triggers.Create(9) # 0 EventTrigger, 1 TimeTrigger, 2 DailyTrigger, 3 WeeklyTrigger, 4 MonthlyTrigger, 5 MonthlyDOWTrigger, 6 IdleTrigger, 7 RegistrationTrigger, 8 BootTrigger, 9 LogonTrigger
