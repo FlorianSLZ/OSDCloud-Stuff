@@ -1,3 +1,5 @@
+Start-Transcript -Path "C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\OSD\OSDCloud-OOBE-Task.log"
+
 $scriptFolderPath = "$env:SystemDrive\OSDCloud\Scripts"
 $ScriptPathOOBE = $(Join-Path -Path $scriptFolderPath -ChildPath "OOBE.ps1")
 $ScriptPathSendKeys = $(Join-Path -Path $scriptFolderPath -ChildPath "SendKeys.ps1")
@@ -7,8 +9,7 @@ If(!(Test-Path -Path $scriptFolderPath)) {
 }
 
 $OOBEScript =@"
-`$Global:Transcript = "`$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-OOBEScripts.log"
-Start-Transcript -Path (Join-Path "`$env:ProgramData\Microsoft\IntuneManagementExtension\Logs\OSD\" `$Global:Transcript) -ErrorAction Ignore | Out-Null
+Start-Transcript -Path "C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\OSD\OSDCloud-OOBE-Actions.log"
 
 Write-Host -ForegroundColor DarkGray "Installing Language Pack: DE-DE"
 Start-Process PowerShell -ArgumentList "-NoL -C Install-Language de-de" -Wait
@@ -40,8 +41,7 @@ Stop-Transcript
 Out-File -FilePath $ScriptPathOOBE -InputObject $OOBEScript -Encoding ascii
 
 $SendKeysScript = @"
-`$Global:Transcript = "`$((Get-Date).ToString('yyyy-MM-dd-HHmmss'))-SendKeys.log"
-Start-Transcript -Path (Join-Path "`$env:ProgramData\Microsoft\IntuneManagementExtension\Logs\OSD\" `$Global:Transcript) -ErrorAction Ignore | Out-Null
+Start-Transcript -Path "C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\OSD\OSDCloud-SendKeys.log"
 
 Write-Host -ForegroundColor DarkGray "Stop Debug-Mode (SHIFT + F10) with WscriptShell.SendKeys"
 `$WscriptShell = New-Object -com Wscript.Shell
@@ -113,3 +113,6 @@ $action.Arguments = '-process:RuntimeBroker.exe C:\WINDOWS\System32\WindowsPower
 $taskFolder = $ShedService.GetFolder("\")
 # https://msdn.microsoft.com/en-us/library/windows/desktop/aa382577(v=vs.85).aspx
 $taskFolder.RegisterTaskDefinition($TaskName, $Task , 6, "SYSTEM", $NULL, 5)
+
+
+Stop-Transcript
