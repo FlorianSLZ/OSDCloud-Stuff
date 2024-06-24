@@ -28,7 +28,7 @@ Write-Host -ForegroundColor Green "Create C:\Windows\Setup\Scripts\SetupComplete
 $SetupCompleteCMD = @'
 powershell.exe -Command Start-Transcript -Path "C:\Windows\Setup\Scripts\SetupComplete.log"
 powershell.exe -Command Get-NetIPAddress
-powershell.exe -Command Test-Connection -ComputerName raw.githubusercontent.com
+powershell.exe -Command Test-NetConnection raw.githubusercontent.com -Port 443
 powershell.exe -Command Set-ExecutionPolicy Unrestricted -Force
 powershell.exe -Command "& {IEX (IRM https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/OOBE-Task.ps1)}"
 powershell.exe -Command Stop-Transcript
