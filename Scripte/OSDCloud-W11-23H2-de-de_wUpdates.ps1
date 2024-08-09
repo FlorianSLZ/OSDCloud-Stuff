@@ -43,22 +43,14 @@ Start-OSDCloud @Params
 #################################################################
 Write-Host -ForegroundColor Green "Downloading and creating script for OOBE phase"
 New-Item -Path "C:\Windows\Setup\Scripts" -ItemType Directory -Force | Out-Null
-Invoke-RestMethod   -Uri 'https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Set-EmbeddedWINKey.ps1' `
-                    -OutFile 'C:\Windows\Setup\Scripts\Set-EmbeddedWINKey.ps1' 
-
-Invoke-RestMethod   -Uri 'https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Windows-Updates.ps1' `
-                    -OutFile 'C:\Windows\Setup\Scripts\Windows-Updates.ps1' 
-
-Invoke-RestMethod   -Uri 'https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/OSDCloud-CleanUp.ps1' `
-                    -OutFile 'C:\Windows\Setup\Scripts\OSDCloud-CleanUp.ps1' 
+Invoke-RestMethod   -Uri 'https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Updates-and-Activation.ps1' `
+                    -OutFile 'C:\Windows\Setup\Scripts\Updates-and-Activation.ps1' 
 
 
 $OOBECMD = @'
 @echo off
 # Execute OOBE Tasks
-start /wait powershell.exe -NoL -ExecutionPolicy Bypass -F C:\Windows\Setup\Scripts\Set-EmbeddedWINKey.ps1
-start /wait powershell.exe -NoL -ExecutionPolicy Bypass -F C:\Windows\Setup\Scripts\Windows-Updates.ps1
-start /wait powershell.exe -NoL -ExecutionPolicy Bypass -F C:\Windows\Setup\Scripts\OSDCloud-CleanUp.ps1
+start /wait powershell.exe -NoL -ExecutionPolicy Bypass -F C:\Windows\Setup\Scripts\Updates-and-Activation.ps1.ps1
 
 exit 
 '@
