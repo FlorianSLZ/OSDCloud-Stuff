@@ -42,20 +42,15 @@ Start-OSDCloud @Params
 #  [PostOS] OOBE CMD Command Line
 #################################################################
 Write-Host -ForegroundColor Green "Downloading and creating script for OOBE phase"
+New-Item -Path "C:\Windows\Setup\Scripts" -ItemType Directory -Force | Out-Null
 Invoke-RestMethod   -Uri 'https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Set-EmbeddedWINKey.ps1' `
-                    -OutFile 'C:\Windows\Setup\scripts\Set-EmbeddedWINKey.ps1' `
-                    -Encoding UTF8 `
-                    -Force
+                    -OutFile 'C:\Windows\Setup\Scripts\Set-EmbeddedWINKey.ps1' 
 
 Invoke-RestMethod   -Uri 'https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Windows-Updates.ps1' `
-                    -OutFile 'C:\Windows\Setup\scripts\Windows-Updates.ps1' `
-                    -Encoding UTF8 `
-                    -Force
+                    -OutFile 'C:\Windows\Setup\Scripts\Windows-Updates.ps1' 
 
 Invoke-RestMethod   -Uri 'https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/OSDCloud-CleanUp.ps1' `
-                    -OutFile 'C:\Windows\Setup\scripts\OSDCloud-CleanUp.ps1' `
-                    -Encoding UTF8 `
-                    -Force
+                    -OutFile 'C:\Windows\Setup\Scripts\OSDCloud-CleanUp.ps1' 
 
 
 $OOBECMD = @'
@@ -67,7 +62,7 @@ start /wait powershell.exe -NoL -ExecutionPolicy Bypass -F C:\Windows\Setup\Scri
 
 exit 
 '@
-$OOBECMD | Out-File -FilePath 'C:\Windows\Setup\scripts\oobe.cmd' -Encoding ascii -Force
+$OOBECMD | Out-File -FilePath 'C:\Windows\Setup\Scripts\oobe.cmd' -Encoding ascii -Force
 
 #=======================================================================
 #   Restart-Computer
