@@ -26,7 +26,10 @@ $Scripts2run = @(
   }
 )
 
+Start-Transcript -Path "$env:ProgramData\Microsoft\IntuneManagementExtension\Logs\Updates-and-Activation.log" -Force
+
 Install-PackageProvider -Name NuGet -Force
 Install-Script Start-SplashScreen -Force
 Start-SplashScreen.ps1 -Processes $Scripts2run
 
+Stop-Transcript
