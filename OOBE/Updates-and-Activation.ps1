@@ -6,10 +6,12 @@
     FileName:    Updates-and-Activation.ps1
     Author:      Florian Salzmann
     Created:     2024-08-09
-    Updated:     2024-08-09
+    Updated:     2024-08-14
 
     Version history:
-    1.0.0   -   (2024-08-09) Script created
+    1.0 - (2024-08-09) Script created
+    1.1 - (2024-08-14) TLS 1.2 added/forced
+
 #>
 $Scripts2run = @(
   @{
@@ -26,10 +28,13 @@ $Scripts2run = @(
   }
 )
 
-Start-Transcript -Path "$env:ProgramData\Microsoft\IntuneManagementExtension\Logs\Updates-and-Activation.log" -Force
+Write-Host "Starting Windows Updates and Activation"
+Start-Transcript -Path "$env:ProgramData\Microsoft\IntuneManagementExtension\Logs\Updates-and-Activation.log" -Force | Out-Null
 
-Install-PackageProvider -Name NuGet -Force
-Install-Script Start-SplashScreen -Force
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+Install-PackageProvider -Name NuGet -Force | Out-Null
+Install-Script Start-SplashScreen -Force | Out-Null
 Start-SplashScreen.ps1 -Processes $Scripts2run
 
 Stop-Transcript
