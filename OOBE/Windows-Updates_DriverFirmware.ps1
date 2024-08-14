@@ -32,7 +32,7 @@ Process {
     }
 
     # Start logging
-    Start-Transcript "C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\Windows-FirmwareAndDrivers.log"
+    Start-Transcript "C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\Windows-FirmwareAndDrivers.log" | Out-Null
 
     Write-Host "Installing Windows Firmware and Drivers Updates ..."
 
