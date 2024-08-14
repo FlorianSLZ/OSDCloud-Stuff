@@ -7,11 +7,11 @@
 
 .NOTES
     Author: Florian Salzmann | @FlorianSLZ | https://scloud.work
-    Version: 1.0
-    Date: 2024-08-09
+    Version: 1.1
 
     Changelog:
     - 2024-08-09: 1.0 Initial version
+    - 2024-08-14: 1.1 OOBE script added + Restart countdown added
     
 #>
     
@@ -56,10 +56,13 @@ exit
 '@
 $OOBECMD | Out-File -FilePath 'C:\Windows\Setup\Scripts\oobe.cmd' -Encoding ascii -Force
 
-#=======================================================================
-#   Restart-Computer
-#=======================================================================
-Write-Host  -ForegroundColor Green "Restarting in 20 seconds!"
-Start-Sleep -Seconds 20
-wpeutil reboot
+#################################################################
+#   [PostOS] Restart-Computer
+#################################################################
+Write-Host  -ForegroundColor Green "Computer will restart in:"
+10..1 | %{
+    Write-Progress -Activity "Computer Restart" -Status "in $_ seconds"
+    Start-Sleep -seconds 1
+ }
+Restart-Computer -Force
 
