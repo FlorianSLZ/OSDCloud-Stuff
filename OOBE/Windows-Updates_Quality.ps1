@@ -32,7 +32,7 @@ Process {
     }
 
     # Start logging
-    Start-Transcript "C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\Windows-QualityUpdates.log"
+    Start-Transcript "C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\Windows-QualityUpdates.log" | Out-Null
 
     Write-Host "Installing Windows Quality Updates ..."
 
