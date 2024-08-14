@@ -11,14 +11,8 @@ If (Test-Path -Path 'C:\ProgramData\OSDeploy') {
     Move-Item 'C:\ProgramData\OSDeploy\*.*' -Destination 'C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\OSD' -Force
 }
 
-
 # Cleanup directories
 If (Test-Path -Path 'C:\OSDCloud') { Remove-Item -Path 'C:\OSDCloud' -Recurse -Force }
 If (Test-Path -Path 'C:\Drivers') { Remove-Item 'C:\Drivers' -Recurse -Force }
-
-# Task Cleanup
-$OSDCloudOOBE_Tasks = Get-ScheduledTask -TaskName "OSDCloud*"
-if($OSDCloudOOBE_Tasks){ Unregister-ScheduledTask -TaskName $OSDCloudOOBE_Tasks.TaskName  -Confirm:$false }
-
 
 Stop-Transcript
