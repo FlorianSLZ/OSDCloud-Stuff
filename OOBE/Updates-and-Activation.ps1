@@ -19,8 +19,12 @@ $Scripts2run = @(
     Script = "https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Set-EmbeddedWINKey.ps1"
   },
   @{
-    Name = "Windows Updates"
-    Script = "https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Windows-Updates.ps1"
+    Name = "Windows Quality Updates"
+    Script = "https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Windows-Updates_Quality.ps1"
+  },
+  @{
+    Name = "Windows Firmware and Driver Updates"
+    Script = "https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Windows-Updates_DriverFirmware.ps1"
   },
   @{
     Name = "Saving Logs and Cleanup"

@@ -14,8 +14,6 @@
 
 [CmdletBinding()]
 Param(
-    [Parameter(Mandatory = $False)] 
-    [array] $Languages = @('de-de', 'fr-fr', 'it-it', 'en-us'),
     
     [Parameter(Mandatory = $False)] 
     [ValidateSet('Soft', 'Hard', 'None', 'Delayed')] 
@@ -98,6 +96,7 @@ Process {
                 Write-Output "$ts Downloading $UpdateCount Updates"
                 foreach ($update in $WUInstaller.Updates) { Write-Output "$($update.Title)" }
                 $Download = $WUDownloader.Download()
+                Write-Verbose $Download
             }
             $InstallUpdateCount = $WUInstaller.Updates.count
             if ($InstallUpdateCount -ge 1) {
