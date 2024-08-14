@@ -28,7 +28,7 @@ $Scripts2run = @(
   }
 )
 
-Write-Host "Starting Windows Updates and Activation"
+Write-Host "Starting Windows Updates and Activation 3"
 Start-Transcript -Path "$env:ProgramData\Microsoft\IntuneManagementExtension\Logs\Updates-and-Activation.log" -Force | Out-Null
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 
