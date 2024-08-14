@@ -32,7 +32,7 @@ $Scripts2run = @(
   }
 )
 
-Write-Host "Starting Windows Updates and Activation 3"
+Write-Host "Starting Windows Updates and Activation"
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 
 Install-PackageProvider -Name NuGet -Force | Out-Null
