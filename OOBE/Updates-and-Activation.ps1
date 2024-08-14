@@ -32,7 +32,6 @@ Write-Host "Starting Windows Updates and Activation"
 Start-Transcript -Path "$env:ProgramData\Microsoft\IntuneManagementExtension\Logs\Updates-and-Activation.log" -Force | Out-Null
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Set-ExecutionPolicy RemoteSigned -Force
 
 Install-PackageProvider -Name NuGet -Force | Out-Null
 Install-Script Start-SplashScreen -Force | Out-Null
