@@ -46,9 +46,12 @@ New-Item -Path "C:\Windows\Setup\Scripts" -ItemType Directory -Force | Out-Null
 Invoke-RestMethod   -Uri 'https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Updates-and-Activation.ps1' `
                     -OutFile 'C:\Windows\Setup\Scripts\Updates-and-Activation.ps1' 
 
-
 $OOBECMD = @'
 @echo off
+
+# Set Execution Policy 
+start /wait powershell.exe -NoL -Command "Set-ExecutionPolicy RemoteSigned -Force"
+
 # Execute OOBE Tasks
 start /wait powershell.exe -NoL -ExecutionPolicy Bypass -File "C:\Windows\Setup\Scripts\Updates-and-Activation.ps1"
 
@@ -59,7 +62,6 @@ $OOBECMD | Out-File -FilePath 'C:\Windows\Setup\Scripts\oobe.cmd' -Encoding asci
 #################################################################
 #   [PostOS] Restart-Computer
 #################################################################
-Write-Host  -ForegroundColor Green "Computer will restart in:"
 10..1 | ForEach-Object{
     Write-Progress -Activity "Computer Restart" -Status "in $_ seconds"
     Start-Sleep -seconds 1
