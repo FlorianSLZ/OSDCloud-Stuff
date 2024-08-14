@@ -57,7 +57,7 @@ powershell.exe -Command Get-NetIPAddress
 powershell.exe -Command Test-NetConnection raw.githubusercontent.com -Port 443
 powershell.exe -Command Set-ExecutionPolicy Unrestricted -Force
 
-start /wait powershell.exe -NoL -ExecutionPolicy Bypass -File "C:\Windows\Setup\Scripts\Updates-and-Activation.ps1"
+powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "C:\Windows\Setup\Scripts\Updates-and-Activation.ps1"
  
 '@
 $OOBECMD | Out-File -FilePath 'C:\Windows\Setup\Scripts\oobe.cmd' -Encoding ascii -Force
