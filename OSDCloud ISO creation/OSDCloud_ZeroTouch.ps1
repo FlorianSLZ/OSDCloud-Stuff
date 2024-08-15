@@ -25,13 +25,16 @@ New-OSDCloudTemplate
 
 # Zero Touch via GitHub script
 Edit-OSDCloudWinPE  -WorkspacePath $WorkspacePath `
-                    -WebPSScript "https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/Scripte/OSDCloud-W11-23H2-DE-FR-IT-EN_wUpdates.ps1" `
+                    -WebPSScript "https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OSDPad/OSDCloud-W11-23H2-DE-FR-IT-EN_wUpdates.ps1" `
                     -Wallpaper "C:\GitHub\OSDCloud-Stuff\OSDCloud ISO creation\scloud-wallpaper.jpg" `
                     -CloudDriver *
 
 
 # Save the changes to ISO
 New-OSDCloudISO -WorkspacePath $WorkspacePath
-
-Rename-Item -Path "$WorkspacePath\OSDCloud_NoPrompt.iso" -NewName "$WorkspacePath\OSDCloud-$ProjectName.iso" -Force
+$FinalISO = "OSDCloud-$ProjectName.iso"
+if(Test-Path "$WorkspacePath\$FinalISO\"){
+    Remove-Item -Path "$WorkspacePath\$FinalISO" -Force
+}
+Rename-Item -Path "$WorkspacePath\OSDCloud_NoPrompt.iso" -NewName "$WorkspacePath\$FinalISO" -Force
 
