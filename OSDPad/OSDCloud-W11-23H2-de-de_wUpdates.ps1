@@ -44,10 +44,11 @@ Start-OSDCloud @Params
 #################################################################
 Write-Host -ForegroundColor Green "Downloading and creating script for OOBE phase"
 New-Item -Path "C:\Windows\Setup\Scripts" -ItemType Directory -Force | Out-Null
-Invoke-RestMethod   -Uri 'https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Updates-and-Activation.ps1' `
-                    -OutFile 'C:\Windows\Setup\Scripts\Updates-and-Activation.ps1' 
+$OOBEScript = "Updates_Activation.ps1"
+Invoke-RestMethod   -Uri "https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/SplashScreen/$OOBEScript" `
+                    -OutFile "C:\Windows\Setup\Scripts\$OOBEScript"
 
-$OOBECMD = @'
+$OOBECMD = @"
 @echo off
 call :LOG > C:\Windows\Setup\Scripts\oobe.log
 exit /B
@@ -60,9 +61,9 @@ set PSExecutionPolicyPreference=Unrestricted
 powershell.exe -Command Get-NetIPAddress
 powershell.exe -Command Set-ExecutionPolicy Unrestricted -Force
 
-powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "C:\Windows\Setup\Scripts\Updates-and-Activation.ps1"
+powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "C:\Windows\Setup\Scripts\$OOBEScript"
  
-'@
+"@
 $OOBECMD | Out-File -FilePath 'C:\Windows\Setup\Scripts\oobe.cmd' -Encoding ascii -Force
 
 #################################################################
