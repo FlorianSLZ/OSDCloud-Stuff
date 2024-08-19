@@ -8,6 +8,7 @@
 
     Changelog:
     - 2024-08-15: 1.0 Initial version
+    - 2024-08-19: 1.1 Added reboot with 20s dealy
 
 #>
 $Scripts2run = @(
@@ -42,6 +43,10 @@ $Scripts2run = @(
   @{
     Name = "Saving Logs and Cleanup"
     Script = "https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/OSDCloud-CleanUp.ps1"
+  },
+  @{
+    Name = "Sending Reboot Command"
+    Script = "shutdown.exe -r -f -t 20"
   }
 )
 
