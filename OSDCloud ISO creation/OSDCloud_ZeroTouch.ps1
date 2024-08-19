@@ -33,7 +33,7 @@ Edit-OSDCloudWinPE  -WorkspacePath $WorkspacePath `
 # Save the changes to ISO
 New-OSDCloudISO -WorkspacePath $WorkspacePath
 $FinalISO = "OSDCloud-$ProjectName.iso"
-if(Test-Path "$WorkspacePath\$FinalISO\"){
+if(Test-Path "$WorkspacePath\$FinalISO"){
     Remove-Item -Path "$WorkspacePath\$FinalISO" -Force
 }
 Rename-Item -Path "$WorkspacePath\OSDCloud_NoPrompt.iso" -NewName "$WorkspacePath\$FinalISO" -Force
