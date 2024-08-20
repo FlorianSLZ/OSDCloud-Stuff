@@ -9,6 +9,7 @@
     Changelog:
     - 2024-08-15: 1.0 Initial version
     - 2024-08-19: 1.1 Added reboot with 20s dealy
+    - 2024-08-19: 1.2 Added Internet Connection Check
 
 #>
 $Scripts2run = @(
@@ -50,7 +51,27 @@ $Scripts2run = @(
   }
 )
 
-Write-Host "Starting Windows Updates and Activation"
+Write-Host "Checking Internet Connection..."
+
+$NetworkCheck = "powershellgallery.com"
+$TimeoutInSeconds = 120 # 2 minutes
+$ElapsedTime = 0
+$SleepTime = 5
+
+while (-not (Test-Connection $NetworkCheck -Count 1 -Quiet) -and ($ElapsedTime -lt $TimeoutInSeconds)) {
+    Start-Sleep -Seconds $SleepTime
+    $ElapsedTime += $SleepTime
+}
+
+if ($ElapsedTime -ge $TimeoutInSeconds) {
+    Write-Error "Timeout reached after 2 minutes without a connection." 
+    exit 1
+} else {
+    Write-Host "Internet connection established after $ElapsedTime s." -ForegroundColor Green
+}
+
+
+Write-Host "Starting Windows Updates, Activation and installation of additional languages..."
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 
 Install-PackageProvider -Name NuGet -Force | Out-Null
