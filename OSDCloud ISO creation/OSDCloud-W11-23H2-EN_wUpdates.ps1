@@ -37,3 +37,4 @@ if(Test-Path "$WorkspacePath\$FinalISO"){
 }
 Rename-Item -Path "$WorkspacePath\OSDCloud_NoPrompt.iso" -NewName "$WorkspacePath\$FinalISO" -Force
 
+Write-Host -ForegroundColor Green "ISO created: $WorkspacePath\$FinalISO"
