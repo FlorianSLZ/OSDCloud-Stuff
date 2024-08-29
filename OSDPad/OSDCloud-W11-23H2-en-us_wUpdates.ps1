@@ -7,7 +7,7 @@
 
 .NOTES
     Author: Florian Salzmann | @FlorianSLZ | https://scloud.work
-    Version: 1.1
+    Version: 1.0
 
     Changelog:
     - 2024-08-29: 1.0 Initial version
