@@ -7,11 +7,10 @@
 
 .NOTES
     Author: Florian Salzmann | @FlorianSLZ | https://scloud.work
-    Version: 1.1
+    Version: 1.0
 
     Changelog:
-    - 2024-06-25: 1.0 Initial version
-    - 2024-08-15: 1.1 Changed OOBE runoptions to CMD script + Restart countdown added
+    - 2024-08-15: 1.0 Initial version
     
 #>
     
@@ -29,7 +28,7 @@ Import-Module OSD -Force
 #################################################################
 $Params = @{
     OSVersion = "Windows 11"
-    OSBuild = "23H2"
+    OSBuild = "24H2"
     OSEdition = "Pro"
     OSLanguage = "de-de"
     OSLicense = "Retail"
@@ -40,14 +39,15 @@ $Params = @{
 Start-OSDCloud @Params
 
 #################################################################
-#   [PostOS] OOBE CMD Command Line
+#  [PostOS] OOBE CMD Command Line
 #################################################################
 Write-Host -ForegroundColor Green "Downloading and creating script for OOBE phase"
 New-Item -Path "C:\Windows\Setup\Scripts" -ItemType Directory -Force | Out-Null
-Invoke-RestMethod   -Uri 'https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Updates-and-Activation.ps1' `
-                    -OutFile 'C:\Windows\Setup\Scripts\Updates-and-Activation.ps1' 
+$OOBEScript = "DE-FR-IT-EN_Updates_Activation.ps1"
+Invoke-RestMethod   -Uri "https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/SplashScreen/$OOBEScript" `
+                    -OutFile "C:\Windows\Setup\Scripts\$OOBEScript"
 
-$OOBECMD = @'
+$OOBECMD = @"
 @echo off
 call :LOG > C:\Windows\Setup\Scripts\oobe.log
 exit /B
@@ -60,9 +60,9 @@ set PSExecutionPolicyPreference=Unrestricted
 powershell.exe -Command Get-NetIPAddress
 powershell.exe -Command Set-ExecutionPolicy Unrestricted -Force
 
-powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "C:\Windows\Setup\Scripts\Updates-and-Activation.ps1"
+powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "C:\Windows\Setup\Scripts\$OOBEScript"
  
-'@
+"@
 $OOBECMD | Out-File -FilePath 'C:\Windows\Setup\Scripts\oobe.cmd' -Encoding ascii -Force
 
 #################################################################
@@ -73,3 +73,4 @@ $OOBECMD | Out-File -FilePath 'C:\Windows\Setup\Scripts\oobe.cmd' -Encoding asci
     Start-Sleep -seconds 1
  }
 Restart-Computer -Force
+
