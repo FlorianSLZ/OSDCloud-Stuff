@@ -4,14 +4,19 @@
 
 .NOTES
     Author: Florian Salzmann | @FlorianSLZ | https://scloud.work
-    Version: 1.0
+    Version: 1.3
 
     Changelog:
     - 2024-08-15: 1.0 Initial version
     - 2024-08-19: 1.1 Added reboot with 20s dealy
     - 2024-08-19: 1.2 Added Internet Connection Check
+    - 2025-03-04: 1.3 Added simple Transcript and PSGallery check
+
 
 #>
+
+Start-Transcript -Path "$PSScriptRoot\DE-FR-IT-EN_Updates_Activation.log" -Append
+
 $Scripts2run = @(
   @{
     Name = "Enabling built-in Windows Producy Key"
@@ -75,6 +80,15 @@ Write-Host "Starting Windows Updates, Activation and installation of additional 
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 
 Install-PackageProvider -Name NuGet -Force | Out-Null
+
+if($(Get-PSRepository).Name -notcontains "PSGallery") {
+  [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+  Register-PSRepository -Default -Verbose
+  Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
+}
 Install-Script Start-SplashScreen -Force | Out-Null
 
 Start-SplashScreen.ps1 -Processes $Scripts2run
+
+
+Stop-Transcript
