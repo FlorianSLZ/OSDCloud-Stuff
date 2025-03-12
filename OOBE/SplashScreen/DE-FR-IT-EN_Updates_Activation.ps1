@@ -23,6 +23,14 @@ $Scripts2run = @(
     Script = "https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Set-EmbeddedWINKey.ps1"
   },
   @{
+    Name = "Windows Quality Updates"
+    Script = "https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Windows-Updates_Quality.ps1"
+  },
+  @{
+    Name = "Windows Firmware and Driver Updates"
+    Script = "https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Windows-Updates_DriverFirmware.ps1"
+  },
+  @{
     Name = "Language Installation: German"
     Script = "Install-Language de-de"
   },
@@ -37,14 +45,6 @@ $Scripts2run = @(
   @{
     Name = "Language Installation: English"
     Script = "Install-Language en-us"
-  },
-  @{
-    Name = "Windows Quality Updates"
-    Script = "https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Windows-Updates_Quality.ps1"
-  },
-  @{
-    Name = "Windows Firmware and Driver Updates"
-    Script = "https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OOBE/Windows-Updates_DriverFirmware.ps1"
   },
   @{
     Name = "Saving Logs and Cleanup"
