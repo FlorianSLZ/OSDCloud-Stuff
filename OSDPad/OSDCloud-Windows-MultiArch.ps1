@@ -50,7 +50,7 @@ Import-Module OSDCloud -Force
 #################################################################
 #   [OS] Start Deployment UI
 #################################################################
-Deploy-OSDCloud
+Invoke-RestMethod 'https://deploy.osdcloud.live' | Invoke-Expression
 
 
 #################################################################
