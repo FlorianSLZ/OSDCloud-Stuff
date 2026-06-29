@@ -32,6 +32,26 @@ $Scripts2run = @(
   }
 )
 
+Write-Host "Checking Internet Connection..."
+
+$NetworkCheck = "powershellgallery.com"
+$TimeoutInSeconds = 120 # 2 minutes
+$ElapsedTime = 0
+$SleepTime = 5
+
+while (-not (Test-Connection $NetworkCheck -Count 1 -Quiet) -and ($ElapsedTime -lt $TimeoutInSeconds)) {
+    Start-Sleep -Seconds $SleepTime
+    $ElapsedTime += $SleepTime
+}
+
+if ($ElapsedTime -ge $TimeoutInSeconds) {
+    Write-Error "Timeout reached after 2 minutes without a connection." 
+    exit 1
+} else {
+    Write-Host "Internet connection established after $ElapsedTime s." -ForegroundColor Green
+}
+
+
 Write-Host "Starting Windows Updates and Activation"
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 
