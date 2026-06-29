@@ -18,4 +18,7 @@
 #################################################################
 #   [OS] Bootstrap deploy.osdcloud.live
 #################################################################
-Invoke-RestMethod 'https://deploy.osdcloud.live' | Invoke-Expression
+# Invoke-RestMethod 'https://deploy.osdcloud.live' | Invoke-Expression
+
+Install-Module -Name OSDCloud -Force -SkipPublisherCheck
+Deploy-OSDCloud
