@@ -14,7 +14,7 @@
 
 
 # Set Workspace Folder
-$ProjectName = "OSDCloud-W11-25H2_EN_EXPERIMENTAL"
+$ProjectName = "OSDCloud-v2_EXPERIMENTAL"
 $WorkspacePath = "C:\OSDCloud\$ProjectName"
 New-Item -ItemType Directory $WorkspacePath -Force | Out-Null
 Set-OSDCloudWorkspace -WorkspacePath $WorkspacePath
@@ -23,9 +23,9 @@ Set-OSDCloudWorkspace -WorkspacePath $WorkspacePath
 New-OSDCloudTemplate 
 
 
-# Zero Touch via GitHub script
+# OSDCloud v2 Start
 Edit-OSDCloudWinPE  -WorkspacePath $WorkspacePath `
-                    -WebPSScript "https://raw.githubusercontent.com/FlorianSLZ/OSDCloud-Stuff/main/OSDPad/OSDCloud-W11-25H2_EN_EXPERIMENTAL.ps1" `
+                    -StartPSCommand 'Install-Module -Name OSDCloud -Force -SkipPublisherCheck; Deploy-OSDCloud; Restart-Computer' `
                     -CloudDriver *
 
 
